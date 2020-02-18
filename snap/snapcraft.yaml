@@ -1,0 +1,54 @@
+name: runner
+# title:
+type: app
+base: core20
+version: v2.165.2
+summary: The Runner for GitHub Actions
+description: |
+  The snap version of `Runner for GitHub Actions`
+build-base: core18
+
+grade: stable
+confinement: classic
+
+environment:
+  SHELL: bash
+  # LANG: null
+  LC_ALL: C
+
+apps:
+  runner: 
+    command: usr/runner/run.sh
+
+parts:
+  runner:
+    source: https://github.com/actions/runner.git
+    source-tag: v2.165.2
+    plugin: dump
+    override-build: |
+      set -ex
+      cd ${SNAPCRAFT_PART_BUILD}/src/
+      ./dev.sh build
+      ./dev.sh runtest
+      ./dev.sh layout
+      ./dev.sh package
+      snapcraftctl build
+    override-stage:
+      set -ex
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/runner
+      cd ${SNAPCRAFT_PART_INSTALL}/usr/runner
+      tar -vxzf ${SNAPCRAFT_PART_INSTALL}/_package/actions-runner-linux-x64-2.165.0.tar.gz
+      snapcraftctl stage
+    build-packages:
+      - zlib1g-dev
+      - liblttng-ust0
+      - libkrb5-3
+      - zlib1g
+      - libssl1.1
+      - libicu-dev
+      - libicu60
+    #stage-packages:
+      #- libicu63
+    # stage:
+    #   - ./usr/
+    
