@@ -25,6 +25,13 @@ apps:
     command: usr/runner/env.sh
 
 parts:
+  externals:
+     plugin: dump
+     source: .
+     organize:
+       env: .env
+       path: .path
+
   runner:
     source: https://github.com/actions/runner.git
     source-tag: v2.165.2
