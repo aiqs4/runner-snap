@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+mkdir -p /var/lib/runner/_work
+mkdir -p /var/lib/runner/_diag
+touch /var/lib/runner/.runner
+touch /var/lib/runner/.credentials
+touch /var/lib/runner/.credentials_rsaparams
+touch /var/lib/runner/svc.sh
