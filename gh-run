@@ -5,12 +5,12 @@ if [ $(id -u) != 0 ] ; then
     exit 1
 fi
 
-mount -t bind /var/lib/runner/${SNAP_NAME}/_work ${SNAP}/usr/lib/runner/_work
-mount -t bind /var/lib/runner/${SNAP_NAME}/_diag ${SNAP}/usr/lib/runner/_diag
-mount -t bind /var/lib/runner/${SNAP_NAME}/.runner ${SNAP}/usr/lib/runner/.runner
-mount -t bind /var/lib/runner/${SNAP_NAME}/.credentials ${SNAP}/usr/lib/runner/.credentials
-mount -t bind /var/lib/runner/${SNAP_NAME}/.credentials_rsaparams ${SNAP}/usr/lib/runner/.credentials_rsaparams
-mount -t bind /var/lib/runner/${SNAP_NAME}/svc.sh ${SNAP}/usr/lib/runner/svc.sh
+mount -o bind /var/lib/runner/${SNAP_NAME}/_work ${SNAP}/usr/lib/runner/_work
+mount -o bind /var/lib/runner/${SNAP_NAME}/_diag ${SNAP}/usr/lib/runner/_diag
+mount -o bind /var/lib/runner/${SNAP_NAME}/.runner ${SNAP}/usr/lib/runner/.runner
+mount -o bind /var/lib/runner/${SNAP_NAME}/.credentials ${SNAP}/usr/lib/runner/.credentials
+mount -o bind /var/lib/runner/${SNAP_NAME}/.credentials_rsaparams ${SNAP}/usr/lib/runner/.credentials_rsaparams
+mount -o bind /var/lib/runner/${SNAP_NAME}/svc.sh ${SNAP}/usr/lib/runner/svc.sh
 
 cd ${SNAP}/usr/lib/runner
 
