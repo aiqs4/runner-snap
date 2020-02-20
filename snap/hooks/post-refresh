@@ -1,8 +1,10 @@
-#!/bin/bash -e
+#!/bin/bash
 
-mkdir -p /var/lib/runner/_work
-mkdir -p /var/lib/runner/_diag
-touch /var/lib/runner/.runner
-touch /var/lib/runner/.credentials
-touch /var/lib/runner/.credentials_rsaparams
-touch /var/lib/runner/svc.sh
+set -ex
+
+mkdir -p /var/lib/gh-runner/${SNAP_NAME}/_work
+mkdir -p /var/lib/gh-runner/${SNAP_NAME}/_diag
+touch /var/lib/gh-runner/${SNAP_NAME}/.runner
+touch /var/lib/gh-runner/${SNAP_NAME}/.credentials
+touch /var/lib/gh-runner/${SNAP_NAME}/.credentials_rsaparams
+touch /var/lib/gh-runner/${SNAP_NAME}/svc.sh
