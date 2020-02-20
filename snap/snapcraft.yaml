@@ -19,34 +19,22 @@ environment:
   LD_LIBRARY_PATH: $SNAP/usr/lib/runner:$LD_LIBRARY_PATH
 
 apps:
-  gh-runner: 
-    command: usr/lib/runner/run.sh
-  gh-config:
-    command: usr/lib/runner/config.sh
+  gh-run:
+    command: usr/bin/gh-run
+  gh-conf:
+    command: usr/bin/gh-conf
 
-hooks:
-  install:
-    plugs:
-      - mount-observe  # to read /proc/*/mounts
-      - network  # to connect to the db for running upgrades
-  post-refresh:
-    plugs:
-      - mount-observe  # to read /proc/*/mounts
-      - network  # to connect to the db for running upgrades
 
-layout:
-  /var/lib/runner/_work:
-    bind: $SNAP/usr/lib/runner/_work
-  /var/lib/runner/_diag:
-    bind: $SNAP/usr/lib/runner/_diag
-  /var/lib/runner/.runner:
-    bind-file: $SNAP/usr/lib/runner/.runner
-  /var/lib/runner/.credentials_rsaparams:
-    bind-file: $SNAP/usr/lib/runner/.credentials_rsaparams
-  /var/lib/runner/.credentials:
-    bind-file: $SNAP/usr/lib/runner/.credentials
-  /var/lib/runner/svc.sh:
-    bind-file: $SNAP/usr/lib/runner/svc.sh
+# hooks:
+#   install:
+#     plugs:
+#       - mount-observe  # to read /proc/*/mounts
+#       - network  # to connect to the db for running upgrades
+#   post-refresh:
+#     plugs:
+#       - mount-observe  # to read /proc/*/mounts
+#       - network  # to connect to the db for running upgrades
+
 
 parts:
   externals:
@@ -55,6 +43,8 @@ parts:
      organize:
        env: .env
        path: .path
+       gh-conf: usr/bin/gh-conf
+       gh-run: usr/bin/gh-run
 
   runner:
     source: https://github.com/actions/runner.git
@@ -71,12 +61,12 @@ parts:
     override-stage: |
       set -ex
       mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/var/lib/runner/_work
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/var/lib/runner/_diag
-      touch ${SNAPCRAFT_PART_INSTALL}/var/lib/runner/.runner
-      touch ${SNAPCRAFT_PART_INSTALL}/var/lib/runner/.credentials
-      touch ${SNAPCRAFT_PART_INSTALL}/var/lib/runner/.credentials_rsaparams
-      touch ${SNAPCRAFT_PART_INSTALL}/var/lib/runner/svc.sh
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/_work
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/_diag
+      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/.runner
+      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/.credentials
+      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/.credentials_rsaparams
+      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/svc.sh
       cd ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner
       tar xzf "${SNAPCRAFT_PART_BUILD}/_package/actions-runner-linux-x64-2.165.0.tar.gz"
       snapcraftctl stage
@@ -92,5 +82,4 @@ parts:
       #- libicu63
     stage:
       - usr/
-      - var/
     
