@@ -1,4 +1,4 @@
-name: runner
+name: gh-runner
 # title:
 type: app
 base: core20
@@ -16,7 +16,7 @@ environment:
   # LANG: null
   LC_ALL: C
 
-  LD_LIBRARY_PATH: $SNAP/usr/lib/runner:$LD_LIBRARY_PATH
+  LD_LIBRARY_PATH: $SNAP/usr/lib/gh-runner:$LD_LIBRARY_PATH
 
 apps:
   gh-run:
@@ -27,13 +27,9 @@ apps:
 
 # hooks:
 #   install:
-#     plugs:
-#       - mount-observe  # to read /proc/*/mounts
-#       - network  # to connect to the db for running upgrades
+#     plugs: []
 #   post-refresh:
-#     plugs:
-#       - mount-observe  # to read /proc/*/mounts
-#       - network  # to connect to the db for running upgrades
+#     plugs: []
 
 
 parts:
@@ -60,14 +56,14 @@ parts:
       snapcraftctl build
     override-stage: |
       set -ex
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/_work
-      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/_diag
-      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/.runner
-      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/.credentials
-      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/.credentials_rsaparams
-      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner/svc.sh
-      cd ${SNAPCRAFT_PART_INSTALL}/usr/lib/runner
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/gh-runner
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/gh-runner/_work
+      mkdir -p ${SNAPCRAFT_PART_INSTALL}/usr/lib/gh-runner/_diag
+      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/gh-runner/.runner
+      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/gh-runner/.credentials
+      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/gh-runner/.credentials_rsaparams
+      touch ${SNAPCRAFT_PART_INSTALL}/usr/lib/gh-runner/svc.sh
+      cd ${SNAPCRAFT_PART_INSTALL}/usr/lib/gh-runner
       tar xzf "${SNAPCRAFT_PART_BUILD}/_package/actions-runner-linux-x64-2.165.0.tar.gz"
       snapcraftctl stage
     build-packages:

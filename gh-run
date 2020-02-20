@@ -5,13 +5,18 @@ if [ $(id -u) != 0 ] ; then
     exit 1
 fi
 
-mount -o bind /var/lib/runner/${SNAP_NAME}/_work ${SNAP}/usr/lib/runner/_work
-mount -o bind /var/lib/runner/${SNAP_NAME}/_diag ${SNAP}/usr/lib/runner/_diag
-mount -o bind /var/lib/runner/${SNAP_NAME}/.runner ${SNAP}/usr/lib/runner/.runner
-mount -o bind /var/lib/runner/${SNAP_NAME}/.credentials ${SNAP}/usr/lib/runner/.credentials
-mount -o bind /var/lib/runner/${SNAP_NAME}/.credentials_rsaparams ${SNAP}/usr/lib/runner/.credentials_rsaparams
-mount -o bind /var/lib/runner/${SNAP_NAME}/svc.sh ${SNAP}/usr/lib/runner/svc.sh
+if [ -z "/var/lib/gh-runner/${SNAP_NAME}/.credentials" ] ; then
+    echo "ERROR: No configuration found. Run `sudo gh-conf` first."
+    exit 1
+fi
 
-cd ${SNAP}/usr/lib/runner
+mount -o bind /var/lib/gh-runner/${SNAP_NAME}/_work ${SNAP}/usr/lib/gh-runner/_work
+mount -o bind /var/lib/gh-runner/${SNAP_NAME}/_diag ${SNAP}/usr/lib/gh-runner/_diag
+mount -o bind /var/lib/gh-runner/${SNAP_NAME}/.runner ${SNAP}/usr/lib/gh-runner/.runner
+mount -o bind /var/lib/gh-runner/${SNAP_NAME}/.credentials ${SNAP}/usr/lib/gh-runner/.credentials
+mount -o bind /var/lib/gh-runner/${SNAP_NAME}/.credentials_rsaparams ${SNAP}/usr/lib/gh-runner/.credentials_rsaparams
+mount -o bind /var/lib/gh-runner/${SNAP_NAME}/svc.sh ${SNAP}/usr/lib/gh-runner/svc.sh
+
+cd ${SNAP}/usr/lib/gh-runner
 
 sudo -u $SUDO_USER ./run.sh
