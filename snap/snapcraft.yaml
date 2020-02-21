@@ -27,13 +27,13 @@ apps:
 
 parts:
   externals:
-     plugin: dump
-     source: .
-     organize:
-       env: .env
-       path: .path
-       gh-conf: usr/bin/gh-conf
-       gh-run: usr/bin/gh-run
+    plugin: dump
+    source: .
+    organize:
+      env: .env
+      path: .path
+      gh-conf: usr/bin/gh-conf
+      gh-run: usr/bin/gh-run
 
   runner:
     source: https://github.com/actions/runner.git
