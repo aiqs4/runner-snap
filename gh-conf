@@ -12,7 +12,7 @@ mount -o bind /var/lib/gh-runner/${SNAP_NAME}/.credentials ${SNAP}/usr/lib/gh-ru
 mount -o bind /var/lib/gh-runner/${SNAP_NAME}/.credentials_rsaparams ${SNAP}/usr/lib/gh-runner/.credentials_rsaparams
 mount -o bind /var/lib/gh-runner/${SNAP_NAME}/svc.sh ${SNAP}/usr/lib/gh-runner/svc.sh
 
-cd ${SNAP}/usr/lib/runner
+cd ${SNAP}/usr/lib/gh-runner
 
 sudo -u $SUDO_USER ./config.sh
 

@@ -19,7 +19,7 @@ environment:
   LD_LIBRARY_PATH: $SNAP/usr/lib/gh-runner:$LD_LIBRARY_PATH
 
 apps:
-  gh-run:
+  gh-runner:
     command: usr/bin/gh-run
   gh-conf:
     command: usr/bin/gh-conf
@@ -27,15 +27,15 @@ apps:
 
 parts:
   externals:
-     plugin: dump
-     source: .
-     organize:
-       env: .env
-       path: .path
-       gh-conf: usr/bin/gh-conf
-       gh-run: usr/bin/gh-run
+    plugin: dump
+    source: .
+    organize:
+      env: _env
+      path: _path
+      gh-conf: usr/bin/gh-conf
+      gh-run: usr/bin/gh-run
 
-  runner:
+  gh-runner:
     source: https://github.com/actions/runner.git
     source-tag: v2.165.2
     plugin: dump

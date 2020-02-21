@@ -1,0 +1,16 @@
+#!/bin/bash 
+
+set -ex
+
+user="$(snapctl get user)"
+group="$(snapctl get group)"
+
+user=${user:-root}
+group=${group:-root}
+
+chown $user.$group -R /var/lib/gh-runner/${SNAP_NAME}/_work
+chown $user.$group -R /var/lib/gh-runner/${SNAP_NAME}/_diag
+chown $user.$group /var/lib/gh-runner/${SNAP_NAME}/.runner
+chown $user.$group /var/lib/gh-runner/${SNAP_NAME}/.credentials
+chown $user.$group /var/lib/gh-runner/${SNAP_NAME}/.credentials_rsaparams
+chown $user.$group /var/lib/gh-runner/${SNAP_NAME}/svc.sh
